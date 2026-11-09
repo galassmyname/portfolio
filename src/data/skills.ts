@@ -7,6 +7,9 @@ import { projects } from './projects';
  *  - `projects`: project slugs that demonstrate a concept (e.g. data preparation);
  *  - `training`: covered in the Sonatel Academy P1 IA programme.
  *
+ * Evidence only counts published projects (drafts are excluded), so a skill
+ * appears once its repository is public.
+ *
  * A skill with public projects shows how many use it. A skill covered only in
  * training is labelled as such. A skill with neither is not displayed.
  */
@@ -15,109 +18,79 @@ type SkillGroupDef = { title: Localized; skills: SkillDef[]; wide?: boolean };
 
 const groups: SkillGroupDef[] = [
   {
-    title: { en: 'Programming & fundamentals', fr: 'Programmation & fondamentaux' },
+    title: { en: 'Programming languages', fr: 'Langages de programmation' },
     skills: [
       { name: 'Python', training: true },
-      { name: 'Java', match: ['Java', 'Java 17'] },
+      { name: 'JavaScript', match: ['JavaScript', 'Node.js', 'Express'], training: true },
       { name: 'TypeScript' },
-      { name: 'JavaScript', training: true },
-      { name: 'PHP' },
+      { name: 'Java', match: ['Java', 'Java 17'] },
       { name: 'SQL', match: ['MySQL', 'PostgreSQL', 'SQLite'] },
-      { name: 'HTML & CSS', match: ['HTML', 'CSS'], training: true, icon: 'HTML' },
-      { name: 'Linux & Bash', match: ['Linux', 'Bash'], training: true, icon: 'Linux' },
+      { name: 'PHP' },
     ],
   },
   {
-    title: { en: 'Data & machine learning', fr: 'Données & machine learning' },
+    title: { en: 'AI & machine learning', fr: 'IA & machine learning' },
     skills: [
       {
-        name: { en: 'Data preparation', fr: 'Préparation des données' },
-        projects: ['waste-image-dataset', 'review-text-preprocessing', 'smart-building-tabular', 'iot-pandas'],
+        name: { en: 'Data preparation & EDA', fr: 'Préparation & analyse exploratoire' },
+        projects: ['waste-image-dataset', 'review-text-preprocessing', 'smart-building-tabular', 'iot-pandas', 'iot-seaborn'],
         training: true,
-      },
-      {
-        name: { en: 'Exploratory data analysis', fr: 'Analyse exploratoire' },
-        projects: ['iot-seaborn', 'iot-matplotlib', 'smart-building-tabular'],
       },
       { name: 'pandas & NumPy', match: ['pandas', 'NumPy'], training: true, icon: 'pandas' },
-      { name: 'Matplotlib & Seaborn', match: ['Matplotlib', 'Seaborn'] },
-      {
-        name: { en: 'ML with scikit-learn', fr: 'ML avec scikit-learn' },
-        match: ['scikit-learn'],
-        icon: 'scikit-learn',
-        training: true,
-      },
-      {
-        name: { en: 'NLP (NLTK, spaCy)', fr: 'NLP (NLTK, spaCy)' },
-        projects: ['review-text-preprocessing'],
-        icon: 'spaCy',
-      },
-      { name: { en: 'No-code ML with KNIME', fr: 'ML no code avec KNIME' }, training: true },
-    ],
-  },
-  {
-    title: { en: 'Deep learning', fr: 'Deep learning' },
-    skills: [
-      {
-        name: { en: 'TensorFlow / Keras', fr: 'TensorFlow / Keras' },
-        projects: ['energy-consumption-nn'],
-        icon: 'TensorFlow / Keras',
-        training: true,
-      },
-      {
-        name: { en: 'Image preparation (vision)', fr: 'Préparation d’images (vision)' },
-        projects: ['waste-image-dataset'],
-      },
-      { name: { en: 'Voice and video AI', fr: 'IA voix et vidéo' }, training: true },
-    ],
-  },
-  {
-    title: { en: 'Generative AI & LLMs', fr: 'IA générative & LLM' },
-    skills: [
+      { name: { en: 'Machine learning (scikit-learn)', fr: 'Machine learning (scikit-learn)' }, match: ['scikit-learn'], icon: 'scikit-learn', training: true },
+      { name: { en: 'Deep learning (TensorFlow / Keras)', fr: 'Deep learning (TensorFlow / Keras)' }, match: ['TensorFlow / Keras'], icon: 'TensorFlow / Keras', training: true },
+      { name: { en: 'NLP (NLTK, spaCy)', fr: 'NLP (NLTK, spaCy)' }, match: ['NLTK', 'spaCy'], icon: 'spaCy' },
+      { name: { en: 'LLM applications', fr: 'Applications LLM' }, match: ['Groq', 'Hugging Face API'], training: true },
+      { name: { en: 'RAG & vector search', fr: 'RAG & recherche vectorielle' }, match: ['ChromaDB', 'sentence-transformers'], training: true },
       { name: { en: 'Prompt engineering', fr: 'Prompt engineering' }, training: true },
-      { name: { en: 'LLMs and their ecosystem', fr: 'LLM et écosystème' }, training: true },
-      { name: { en: 'LLM-based applications', fr: 'Applications basées sur les LLM' }, training: true },
-      { name: { en: 'AI agents', fr: 'Agents IA' }, training: true },
+      { name: { en: 'AI agents & automation', fr: 'Agents IA & automatisation' }, training: true },
     ],
   },
   {
-    title: { en: 'AI engineering & deployment', fr: 'Ingénierie IA & déploiement' },
+    title: { en: 'Backend & APIs', fr: 'Backend & API' },
     skills: [
       {
-        name: { en: 'REST APIs', fr: 'API REST' },
-        projects: ['student-microservices', 'appointment-api', 'distributed-system', 'sunutransport', 'red-product', 'book-management'],
+        name: { en: 'REST API design', fr: 'Conception d’API REST' },
+        projects: ['couture-api', 'student-microservices', 'appointment-api', 'distributed-system', 'sunutransport', 'red-product', 'book-management'],
         training: true,
       },
-      { name: 'Docker', match: ['Docker', 'Docker Compose'] },
-      { name: 'Kubernetes', match: ['Kubernetes'] },
-      { name: 'CI/CD (Jenkins, Ansible)', match: ['Jenkins', 'Ansible'], icon: 'Ansible' },
-      { name: { en: 'LLM-oriented MLOps', fr: 'MLOps orienté LLM' }, training: true },
-      { name: { en: 'AI automation', fr: 'Automatisation IA' }, training: true },
-    ],
-  },
-  {
-    title: { en: 'Software engineering', fr: 'Génie logiciel' },
-    skills: [
+      { name: 'FastAPI', match: ['FastAPI'], training: true },
+      { name: 'Node.js / Express', match: ['Express'], icon: 'Node.js' },
       { name: 'Spring Boot' },
       { name: 'Django REST Framework', icon: 'Django' },
-      { name: 'Node.js / Express', match: ['Express'], icon: 'Node.js' },
       { name: 'Laravel' },
+      { name: { en: 'Automated tests (pytest)', fr: 'Tests automatisés (pytest)' }, match: ['pytest'] },
+    ],
+  },
+  {
+    title: { en: 'Frontend', fr: 'Frontend' },
+    skills: [
+      { name: 'React / Next.js', match: ['React', 'Next.js'], icon: 'React' },
       { name: 'Angular' },
-      { name: 'React' },
-      { name: 'Next.js' },
+      { name: 'HTML & CSS', match: ['HTML', 'CSS'], training: true, icon: 'HTML' },
+      { name: 'Tailwind CSS' },
+    ],
+  },
+  {
+    title: { en: 'Databases', fr: 'Bases de données' },
+    skills: [
       { name: 'PostgreSQL' },
       { name: 'MySQL' },
       { name: 'MongoDB' },
+      { name: { en: 'ORMs (SQLAlchemy, Prisma, JPA)', fr: 'ORM (SQLAlchemy, Prisma, JPA)' }, match: ['SQLAlchemy', 'Prisma', 'Spring Data JPA'] },
     ],
   },
   {
-    title: { en: 'Professional skills', fr: 'Compétences professionnelles' },
+    title: { en: 'Tools, infrastructure & big data', fr: 'Outils, infrastructure & big data' },
     wide: true,
     skills: [
-      { name: { en: 'Teamwork', fr: 'Travail d’équipe' }, training: true },
-      { name: { en: 'Solving data problems', fr: 'Résolution de problèmes data' }, training: true },
-      { name: { en: 'Technical communication', fr: 'Communication technique' }, training: true },
-      { name: { en: 'Data ethics', fr: 'Éthique des données' }, training: true },
+      { name: { en: 'Git & GitHub (team workflow)', fr: 'Git & GitHub (travail en équipe)' }, projects: ['labour-code-rag', 'appointment-api'], icon: 'Git' },
+      { name: 'Docker', match: ['Docker', 'Docker Compose'] },
+      { name: 'Kubernetes', match: ['Kubernetes'] },
+      { name: 'CI/CD (Jenkins, Ansible)', match: ['Jenkins', 'Ansible'], icon: 'Ansible' },
+      { name: 'Linux & Bash', match: ['Linux', 'Bash'], training: true, icon: 'Linux' },
+      { name: 'Hadoop (HDFS, YARN, MapReduce)', match: ['Hadoop'], icon: 'Hadoop' },
+      { name: 'Apache Spark / PySpark', match: ['PySpark', 'Apache Spark'], icon: 'Apache Spark' },
     ],
   },
 ];

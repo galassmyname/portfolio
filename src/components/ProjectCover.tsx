@@ -7,8 +7,9 @@ import { useLang } from '../i18n/LanguageContext';
  * Card cover for a project.
  *
  * Real visuals come first: images published in the project's own repository
- * (dataset samples, charts produced by its notebooks), converted to 640×360
- * WebP in public/images/projects/. No screenshot is staged or invented.
+ * (dataset samples, charts produced by its notebooks) or screenshots of the
+ * running application taken by the author, converted to 16:9 WebP in
+ * public/images/projects/. No screenshot is staged or invented.
  *
  * Every other project gets a drawn illustration instead: a pattern that
  * evokes its subject, an icon, and a tint by category. It is decorative and
@@ -18,6 +19,34 @@ import { useLang } from '../i18n/LanguageContext';
 const IMG = `${import.meta.env.BASE_URL}images/projects/`;
 
 const images: Record<string, { file: string; alt: Localized }> = {
+  sunutransport: {
+    file: 'sunutransport.webp',
+    alt: {
+      en: 'Screenshot of the SunuTransport dashboard: a bus tracked live on a map of Dakar, with its next stop and ETA',
+      fr: 'Capture du tableau de bord SunuTransport : un bus suivi en direct sur une carte de Dakar, avec son prochain arrêt et le temps estimé',
+    },
+  },
+  'red-product': {
+    file: 'red-product.webp',
+    alt: {
+      en: 'Screenshot of the RED PRODUCT hotel list in the admin interface',
+      fr: 'Capture de la liste des hôtels dans l’interface d’administration RED PRODUCT',
+    },
+  },
+  techassist: {
+    file: 'techassist.webp',
+    alt: {
+      en: 'Screenshot of the TechAssist desktop app home screen with its shortcuts',
+      fr: 'Capture de l’écran d’accueil de l’application de bureau TechAssist et de ses raccourcis',
+    },
+  },
+  'donnees-decisions': {
+    file: 'donnees-decisions.webp',
+    alt: {
+      en: 'Screenshot of the Données & Décisions home page',
+      fr: 'Capture de la page d’accueil Données & Décisions',
+    },
+  },
   'waste-image-dataset': {
     file: 'waste-image-dataset.webp',
     alt: {
@@ -318,6 +347,11 @@ const glyphs: Record<Glyph, ReactNode> = {
 };
 
 const art: Record<string, [Motif, Glyph]> = {
+  'labour-code-rag': ['text', 'chat'],
+  'couture-api': ['services', 'server'],
+  'hadoop-mapreduce-cluster': ['cluster', 'database'],
+  'spark-emr-revenue': ['pipeline', 'layers'],
+  'first-aid-rag-chatbot': ['layout', 'chat'],
   sunutransport: ['map', 'bus'],
   'student-microservices': ['services', 'network'],
   'tech-assist-dakar': ['shop', 'cart'],
@@ -343,11 +377,11 @@ const art: Record<string, [Motif, Glyph]> = {
 
 /** Tint by main category, all drawn from the site's blue–cyan range. */
 const tint: Record<Category, string> = {
-  'ML & Data': 'cyan',
-  'Deep Learning & CV': 'violet',
-  'Backend & API': 'emerald',
+  'Artificial Intelligence': 'violet',
+  'Machine Learning': 'cyan',
+  'Software Engineering': 'amber',
   'Full Stack': 'indigo',
-  Other: 'amber',
+  'Backend & Big Data': 'emerald',
 };
 
 export const projectTone = (project: Project) => tint[project.categories[0]];

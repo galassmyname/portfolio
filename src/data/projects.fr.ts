@@ -7,10 +7,90 @@ import type { Project } from './projects';
  * proper nouns are shared and stay in projects.ts.
  */
 type ProjectText = Partial<
-  Pick<Project, 'name' | 'summary' | 'description' | 'context' | 'problem' | 'solution' | 'features' | 'notes' | 'architecture'>
+  Pick<Project, 'name' | 'summary' | 'description' | 'role' | 'context' | 'problem' | 'solution' | 'features' | 'notes' | 'architecture'>
 >;
 
 const fr: Record<string, ProjectText> = {
+  'labour-code-rag': {
+    name: 'Assistant RAG sur le Code du travail',
+    role: 'Équipe de 5 (Sonatel Academy P1 IA). J’ai réalisé la partie 5 : function calling et garde-fous branchés dans le pipeline, et la section correspondante du rapport.',
+    summary: 'Répond aux questions sur le Code du travail sénégalais de 2026 en citant les articles utilisés.',
+    description:
+      'Un assistant RAG (génération augmentée par récupération) qui répond en français aux questions sur le Code du travail du Sénégal (loi n° 2026-18), cite les articles sur lesquels il s’appuie et est évalué sur un jeu de questions de référence. Projet d’équipe du module « LLM & écosystème » de la P1 IA de Sonatel Academy.',
+    context:
+      'Un projet d’équipe du module « LLM & écosystème » de la P1 IA de Sonatel Academy : construire un assistant qui répond aux questions sur un corpus public en français, indique ses sources et mesure sa propre qualité.',
+    problem:
+      'Un texte juridique est long, précis et récemment modifié : le Code du travail de 2026 remplace celui de 1997, qu’un modèle de langage a pu mémoriser. Les réponses doivent venir du texte en vigueur et renvoyer à l’article utilisé.',
+    solution:
+      'La loi est découpée en un chunk par article (les articles longs sont coupés en fin de phrase avec 150 caractères de chevauchement, et le contexte Titre > Chapitre > Section est répété dans chaque chunk). Les chunks sont vectorisés en local avec multilingual-e5-small et stockés dans ChromaDB. Pour chaque question, les passages les plus proches sont récupérés, un seuil de similarité signale les questions hors corpus, et un LLM servi par Groq rédige la réponse à partir de ces seuls passages, avec citations. Chaque requête est tracée (latence par étape, tokens, coût) dans un journal JSON Lines.',
+    features: [
+      'Un chunk par article, pour pouvoir citer « l’article N »',
+      'Embeddings multilingues en local (multilingual-e5-small) et collection ChromaDB persistante',
+      'Seuil de similarité pour détecter les questions non couvertes par le corpus',
+      'Function calling et garde-fous branchés dans le pipeline (ma partie)',
+      'Traces par requête : latence de chaque étape, tokens et coût estimé',
+      'Jeu d’évaluation de questions de référence : factuelles, comparaisons, hors corpus et pièges',
+    ],
+    architecture: {
+      caption: 'D’après le README du dépôt et les modules de src/.',
+      layers: [
+        { label: 'Ingestion', nodes: ['collect.py · PDF (PyMuPDF)', 'chunking.py · un chunk par article'] },
+        { label: 'Récupération', nodes: ['index.py · multilingual-e5-small', 'ChromaDB (cosinus)', 'retrieve.py · top-k + seuil'] },
+        { label: 'Génération', nodes: ['pipeline.py · LLM via Groq', 'tools.py · function calling', 'guardrails.py'] },
+        { label: 'Qualité', nodes: ['evaluate.py', 'observability.py · traces'] },
+      ],
+    },
+    notes: [
+      'Projet d’équipe hébergé sur le compte d’un coéquipier (Atou-D10). Mes commits couvrent la partie 5 (function calling, garde-fous) et le rapport.',
+      'Certaines sections du README du dépôt (résultats d’évaluation, cas des garde-fous) étaient encore marquées « à compléter » au moment de la rédaction.',
+    ],
+  },
+  'couture-api': {
+    name: 'API REST d’un atelier de couture',
+    summary: 'API FastAPI + PostgreSQL pour un atelier de couture : commandes, paiements, livraisons, statistiques.',
+    description:
+      'API REST de gestion d’un atelier de couture : clients et mesures, commandes et lignes de commande, paiements, livraisons et statistiques, avec authentification JWT et trois rôles. Projet final du module FastAPI / PostgreSQL de Sonatel Academy.',
+    context:
+      'Projet final du module FastAPI / PostgreSQL de Sonatel Academy : un backend complet pour un atelier de couture, spécifié en 44 routes et un ensemble de règles de gestion.',
+    problem:
+      'Un atelier suit ses clients, leurs mesures, les commandes de vêtements, les paiements partiels et les livraisons — souvent sur papier. Les règles (qui peut modifier une commande, quand une livraison peut être confirmée, ce qui reste impayé) doivent être appliquées de façon cohérente.',
+    solution:
+      'Une application FastAPI en couches : les routeurs vérifient les droits et appellent un service ; toutes les règles de gestion sont dans services/ ; les modèles SQLAlchemy 2 sont migrés avec Alembic ; les schémas Pydantic séparent création, modification et lecture. Les mots de passe sont hachés avec Argon2 et les requêtes authentifiées par JWT. Docker Compose démarre PostgreSQL, applique les migrations, crée l’administrateur et le catalogue, puis lance l’API.',
+    features: [
+      '44 routes sous /api/v1 : authentification, utilisateurs, clients, catalogue, mesures, commandes, paiements, livraisons, statistiques',
+      'Trois rôles (admin, accueil, tailleur) avec contrôle des droits par route',
+      'Historique des statuts de commande, lignes de commande, paiements partiels et suivi des impayés',
+      'Listes paginées et messages d’erreur en français avec des codes HTTP cohérents (401, 403, 404, 409, 422)',
+      '37 tests pytest sur une base SQLite en mémoire, couvrant les règles de gestion et les droits par rôle',
+      'Démarrage en une commande avec Docker Compose ; documentation Swagger sur /docs',
+    ],
+    architecture: {
+      caption: 'D’après la structure du dépôt (app/, alembic/, tests/).',
+      layers: [
+        { label: 'API', nodes: ['Routeurs FastAPI', 'JWT · contrôle des rôles (deps.py)'] },
+        { label: 'Métier', nodes: ['services/ · règles de gestion', 'Schémas Pydantic'] },
+        { label: 'Données', nodes: ['Modèles SQLAlchemy 2', 'Migrations Alembic', 'PostgreSQL'] },
+      ],
+    },
+  },
+  'hadoop-mapreduce-cluster': {
+    name: 'Cluster Hadoop & analyse des ventes en MapReduce',
+    summary: 'Cluster Hadoop 3.4 multi-nœuds sous Docker et quatre jobs MapReduce en Python.',
+    description:
+      'Un cluster Hadoop 3.4.1 sous Docker Compose (1 NameNode, 3 DataNodes, 1 ResourceManager, 3 NodeManagers) qui exécute quatre jobs MapReduce en Python sur 100 000 transactions de vente synthétiques : chiffre d’affaires par pays et par mois, statistiques par catégorie et panier moyen par moyen de paiement. Chaque job est vérifié par un calcul Python indépendant, et des pannes de nœuds sont simulées. Travail du Master 2 SI (UADB).',
+  },
+  'spark-emr-revenue': {
+    name: 'Chiffre d’affaires par pays en PySpark sur Amazon EMR',
+    summary: 'Job PySpark sur Amazon EMR : CA par pays depuis S3, réécrit en Parquet.',
+    description:
+      'Un job PySpark soumis à un cluster Amazon EMR : il lit des transactions depuis S3, vérifie et nettoie les colonnes, calcule le chiffre d’affaires par pays, classe les pays et écrit le résultat sur S3 au format Parquet. Devoir du Master 2 SI (UADB, Big Data & NoSQL).',
+  },
+  'first-aid-rag-chatbot': {
+    name: 'Chatbot RAG de premiers secours (en cours)',
+    summary: 'Assistant de premiers secours en français : recherche hybride, reranking et réponses LLM.',
+    description:
+      'Un assistant de premiers secours en français fondé sur des guides officiels (PSC1 2024, FICR 2020, Croix-Rouge canadienne) : recherche hybride (BM25 + embeddings multilingues dans ChromaDB), reranking par cross-encoder, seuil de confiance, réécriture de requête par LLM en secours et génération de la réponse via Groq, exposés par une API FastAPI en couches. L’historique de conversation et l’interface web restent à faire.',
+  },
   sunutransport: {
     summary: 'Gestion de lignes de bus avec suivi GPS en temps réel sur carte.',
     name: 'SunuTransport — Lignes de bus & suivi en temps réel',
@@ -271,10 +351,10 @@ const fr: Record<string, ProjectText> = {
       'Application Python modulaire en ligne de commande pour cataloguer des datasets : ajout, recherche, tri, modification et suppression, statistiques et persistance en CSV et JSON.',
   },
   'ai-workspace-ui': {
-    summary: 'Interface d’un espace de travail IA : chat, résumé et traduction.',
+    summary: 'Espace de travail web dont le chat interroge un LLM via l’API Hugging Face.',
     name: 'Interface AI Workspace',
     description:
-      'Interface front-end d’un espace de travail IA — tableau de bord, chat, résumé, traduction, prédiction et historique — réalisée en JavaScript natif avec des données simulées.',
+      'Espace de travail IA en JavaScript natif — tableau de bord, chat, résumé, traduction, prédiction et historique. Le chat envoie les requêtes à un LLM via le routeur Hugging Face (chat completions) avec un jeton saisi par l’utilisateur et conservé dans le navigateur ; les vues du tableau de bord utilisent des données d’exemple.',
   },
   'iot-sensor-classifier': {
     summary: 'Classifieur k-NN qui prédit l’état de capteurs IoT avec scikit-learn.',

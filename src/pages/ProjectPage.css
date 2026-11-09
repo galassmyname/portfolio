@@ -267,3 +267,9 @@
     font-size: 1rem;
   }
 }
+
+/* Team projects: the role spans the full width of the meta panel. */
+.case__meta > .case__role {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--border);
+}

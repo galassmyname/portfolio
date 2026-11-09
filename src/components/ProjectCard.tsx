@@ -11,6 +11,9 @@ const MAX_TAGS = 4;
 
 export type CardVariant = 'default' | 'wide' | 'wide-flip';
 
+/** Workshops and exercises get a compact card (no cover), so the main projects stand out. */
+const isCompact = (p: Project) => Boolean(p.learning);
+
 /**
  * Project card: a framed cover, then category and year, title, one-line
  * summary, the main technologies as logos and the links. `wide` cards lay the
@@ -35,14 +38,17 @@ export default function ProjectCard({
   const caseStudy = hasCaseStudy(project);
   const href = caseStudy ? projectPath(lang, project.slug) : undefined;
   const repos = allRepos(project);
+  const compact = isCompact(project);
+  const urlFor = (repo: string) => repoUrl(repo === project.repo ? project : { repo });
 
   return (
     <li
-      className={`card card--${variant} card--tone-${projectTone(project)}${project.featured ? ' card--featured' : ''}`}
+      className={`card card--${compact ? 'compact' : variant} card--tone-${projectTone(project)}${project.featured ? ' card--featured' : ''}`}
       style={{ animationDelay: `${Math.min(order, 8) * 50}ms` }}
       hidden={hidden}
     >
       <article className="spot" aria-labelledby={titleId}>
+        {!compact && (
         <div className="card__media">
           <ProjectCover project={project} />
           {project.featured && (
@@ -54,10 +60,11 @@ export default function ProjectCard({
             </span>
           )}
         </div>
+        )}
 
         <div className="card__body">
           <p className="card__meta mono">
-            <span className="card__cat">{t.projects.categories[project.categories[0]]}</span>
+            <span className="card__cat">{compact ? t.projects.learning : t.projects.categories[project.categories[0]]}</span>
             <span className="card__year">{project.year}</span>
           </p>
 
@@ -67,6 +74,11 @@ export default function ProjectCard({
           <p className="card__desc" title={project.description}>
             {project.summary}
           </p>
+          {project.role && (
+            <p className="card__role">
+              <span className="mono">{t.projects.myRole}</span> {project.role}
+            </p>
+          )}
 
           <ul className="card__tags" aria-label={t.projects.technologies}>
             {shown.map((tech) =>
@@ -95,7 +107,7 @@ export default function ProjectCard({
                 <ArrowIcon />
               </a>
             ) : (
-              <a className="card__cta" href={repoUrl({ repo: project.repo })} target="_blank" rel="noopener noreferrer" aria-describedby={titleId}>
+              <a className="card__cta" href={urlFor(project.repo)} target="_blank" rel="noopener noreferrer" aria-describedby={titleId}>
                 GitHub
                 <ArrowIcon direction="up-right" />
                 <span className="sr-only"> {t.newTab}</span>
@@ -106,7 +118,7 @@ export default function ProjectCard({
                 const part = repos.length > 1 ? repo.replace(/^.*-/, '') : null;
                 const label = part ? t.projects.sourceCodePart(part) : t.projects.sourceCode;
                 return (
-                  <a key={repo} className="card__icon-link" href={repoUrl({ repo })} target="_blank" rel="noopener noreferrer" title={label}>
+                  <a key={repo} className="card__icon-link" href={urlFor(repo)} target="_blank" rel="noopener noreferrer" title={label}>
                     <GitHubIcon />
                     {part && (
                       <span className="card__icon-text" aria-hidden="true">

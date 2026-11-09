@@ -4,13 +4,12 @@ export type Localized = Record<Lang, string>;
 
 export const profile = {
   name: 'Serigne Fallou Mbaye',
-  role: { en: 'Software Engineer', fr: 'Ingénieur logiciel' } as Localized,
-  specialization: { en: 'AI & Machine Learning', fr: 'IA & Machine Learning' } as Localized,
+  /** The two domains the profile is built around (hero eyebrow, footer). */
+  role: { en: 'Software Engineering', fr: 'Génie logiciel' } as Localized,
+  specialization: { en: 'Artificial Intelligence', fr: 'Intelligence artificielle' } as Localized,
+  /** Job title for structured data: a developer in progress, not a senior title. */
+  jobTitle: { en: 'Software developer', fr: 'Développeur logiciel' } as Localized,
   location: { en: 'Dakar, Senegal', fr: 'Dakar, Sénégal' } as Localized,
-  tagline: {
-    en: 'Specialising in AI, I build applications and intelligent solutions.',
-    fr: 'Spécialisé en IA, je développe des applications et des solutions intelligentes.',
-  } as Localized,
   githubUser: 'galassmyname',
   githubUrl: 'https://github.com/galassmyname',
   linkedinUrl: 'https://sn.linkedin.com/in/serigne-fallou-mbaye-200a57280',
@@ -20,8 +19,13 @@ export const profile = {
     url: `${import.meta.env.BASE_URL}cv/Serigne_Fallou_Mbaye_CV.pdf`,
     fileName: 'Serigne_Fallou_Mbaye_CV.pdf',
   },
-  /** Drop the portrait at public/images/profile.jpg. */
-  photo: `${import.meta.env.BASE_URL}images/profile.jpg`,
+  /**
+   * Official portrait (Orange Digital Center photo session), full frame, 2:3.
+   * WebP in three widths plus a JPEG fallback, in public/images/.
+   */
+  photo: `${import.meta.env.BASE_URL}images/serigne-fallou-mbaye-odc.jpg`,
+  photoSources: [480, 720, 1080].map((w) => `${import.meta.env.BASE_URL}images/serigne-fallou-mbaye-odc-${w}.webp ${w}w`).join(', '),
+  photoSize: { width: 720, height: 1080 },
 };
 
 export type EducationEntry = {

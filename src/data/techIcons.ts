@@ -49,6 +49,14 @@ const byTech: Record<string, string> = {
   OpenShift: 'redhatopenshift',
   Bash: 'gnubash',
   Linux: 'linux',
+  FastAPI: 'fastapi',
+  Git: 'git',
+  Hadoop: 'apachehadoop',
+  'Apache Spark': 'apachespark',
+  PySpark: 'apachespark',
+  pytest: 'pytest',
+  SQLAlchemy: 'sqlalchemy',
+  'Hugging Face API': 'huggingface',
 };
 
 /** Sprite symbol id for a technology name as written in projects.ts / skills.ts. */

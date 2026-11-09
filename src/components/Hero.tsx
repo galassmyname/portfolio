@@ -19,10 +19,13 @@ const stack = (() => {
     .map(([tech]) => tech);
 })();
 
+const step = (i: number) => ({ '--i': i }) as React.CSSProperties;
+
 /**
- * Centred hero: photo first, then role, name, one-line pitch, the two main
- * actions and a row of quiet links. Entrance motion is a one-off CSS
- * animation (disabled with prefers-reduced-motion).
+ * Two-column hero: on desktop the introduction sits on the left and the
+ * official portrait on the right; on small screens the text comes first and
+ * the portrait follows. Entrance motion is a one-off CSS animation (disabled
+ * with prefers-reduced-motion).
  */
 export default function Hero() {
   const { lang } = useLang();
@@ -33,61 +36,65 @@ export default function Hero() {
   return (
     <section id="home" className="hero" aria-labelledby="hero-title">
       <div className="container hero__inner">
-        <HeroPortrait />
+        <div className="hero__text">
+          <p className="hero__role hero__in" style={step(1)}>
+            {profile.role[lang]} <span aria-hidden="true">·</span> {profile.specialization[lang]}
+          </p>
 
-        <p className="hero__role hero__in" style={{ '--i': 1 } as React.CSSProperties}>
-          {profile.role[lang]} <span aria-hidden="true">·</span> {profile.specialization[lang]}
-        </p>
+          <h1 id="hero-title" className="hero__name hero__in" style={step(2)}>
+            {first} <span className="hero__accent">{last}</span>
+          </h1>
 
-        <h1 id="hero-title" className="hero__name hero__in" style={{ '--i': 2 } as React.CSSProperties}>
-          {first} <span className="hero__accent">{last}</span>
-        </h1>
+          <p className="hero__tagline hero__in" style={step(3)}>
+            {t.hero.headline}
+          </p>
 
-        <p className="hero__tagline hero__in" style={{ '--i': 3 } as React.CSSProperties}>
-          {profile.tagline[lang]}
-        </p>
+          <p className="hero__intro hero__in" style={step(4)}>
+            {t.hero.intro}
+          </p>
 
-        <div className="hero__actions hero__in" style={{ '--i': 4 } as React.CSSProperties}>
-          <a className="btn btn--primary" href="#projects">
-            {t.hero.cta}
-            <ArrowIcon />
-          </a>
-          <a className="btn btn--accent" href="#contact">
-            <MailIcon />
-            {t.hero.contact}
-          </a>
+          <div className="hero__actions hero__in" style={step(5)}>
+            <a className="btn btn--primary" href="#projects">
+              {t.hero.cta}
+              <ArrowIcon />
+            </a>
+            <a className="btn btn--accent" href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
+              <GitHubIcon />
+              {t.hero.github}
+              <span className="sr-only"> {t.newTab}</span>
+            </a>
+            <a className="btn" href="#contact">
+              <MailIcon />
+              {t.hero.contact}
+            </a>
+          </div>
+
+          <ul className="hero__links hero__in" style={step(6)}>
+            <li>
+              <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                <LinkedInIcon />
+                LinkedIn
+                <span className="sr-only"> {t.newTab}</span>
+              </a>
+            </li>
+            <li>
+              <a href={profile.cv.url} download={profile.cv.fileName} type="application/pdf" title={t.hero.downloadCv}>
+                <DownloadIcon />
+                {t.hero.cv}
+                <span className="sr-only"> — {t.hero.downloadCv}</span>
+              </a>
+            </li>
+            <li className="hero__place">
+              <PinIcon />
+              {profile.location[lang]}
+            </li>
+          </ul>
         </div>
 
-        <ul className="hero__links hero__in" style={{ '--i': 5 } as React.CSSProperties}>
-          <li>
-            <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
-              <GitHubIcon />
-              GitHub
-              <span className="sr-only"> {t.newTab}</span>
-            </a>
-          </li>
-          <li>
-            <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">
-              <LinkedInIcon />
-              LinkedIn
-              <span className="sr-only"> {t.newTab}</span>
-            </a>
-          </li>
-          <li>
-            <a href={profile.cv.url} download={profile.cv.fileName} type="application/pdf" title={t.hero.downloadCv}>
-              <DownloadIcon />
-              {t.hero.cv}
-              <span className="sr-only"> — {t.hero.downloadCv}</span>
-            </a>
-          </li>
-          <li className="hero__place">
-            <PinIcon />
-            {profile.location[lang]}
-          </li>
-        </ul>
+        <HeroPortrait />
       </div>
 
-      <div className="marquee hero__in" style={{ '--i': 6 } as React.CSSProperties}>
+      <div className="marquee hero__in" style={step(7)}>
         <p className="sr-only">{t.hero.stack}</p>
         <div className="marquee__track">
           {[0, 1].map((copy) => (

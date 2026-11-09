@@ -69,12 +69,18 @@ export default function ProjectPage({ project }: { project: Project | undefined 
             <dt className="mono">{c.repository}</dt>
             <dd className="case__repos">
               {allRepos(project).map((repo) => (
-                <a key={repo} className="text-link" href={repoUrl({ repo })} target="_blank" rel="noopener noreferrer">
-                  <GitHubIcon /> {repo}
+                <a key={repo} className="text-link" href={repoUrl(repo === project.repo ? project : { repo })} target="_blank" rel="noopener noreferrer">
+                  <GitHubIcon /> {repo === project.repo && project.repoOwner ? `${project.repoOwner}/${repo}` : repo}
                 </a>
               ))}
             </dd>
           </div>
+          {project.role && (
+            <div className="case__role">
+              <dt className="mono">{t.projects.myRole}</dt>
+              <dd>{project.role}</dd>
+            </div>
+          )}
           {project.demoUrl && (
             <div>
               <dt className="mono">{c.demo}</dt>

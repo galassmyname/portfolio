@@ -7,7 +7,7 @@
   min-height: min(100svh, 60rem);
   padding: calc(var(--nav-h) + clamp(2rem, 6vh, 4rem)) 0 clamp(2rem, 5vh, 3rem);
   overflow: hidden;
-  background: radial-gradient(680px 440px at 50% 28%, rgba(var(--accent-rgb), 0.09), transparent 70%);
+  background: radial-gradient(620px 480px at 74% 42%, rgba(var(--accent-rgb), 0.08), transparent 70%);
 }
 
 /* Faint engineering grid behind the hero — the site's visual signature. */
@@ -21,17 +21,37 @@
     linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
   background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(ellipse 60% 65% at 50% 40%, #000 25%, transparent 75%);
-  mask-image: radial-gradient(ellipse 60% 65% at 50% 40%, #000 25%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 55% 45%, #000 25%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 70% at 55% 45%, #000 25%, transparent 75%);
 }
 
+/* Text left, portrait right on desktop; stacked (text first) below 960px. */
 .hero__inner {
   position: relative;
   z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 5.5rem);
+}
+
+.hero__text {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+@media (max-width: 959px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .hero__text {
+    align-items: center;
+    text-align: center;
+  }
 }
 
 /* One-off entrance, staggered by --i. */
@@ -48,7 +68,7 @@
 }
 
 .hero__role {
-  margin-top: 2.6rem;
+  margin: 0;
   padding: 0.3rem 0.85rem;
   border: 1px solid rgba(var(--accent-rgb), 0.3);
   border-radius: 999px;
@@ -66,7 +86,7 @@
 
 .hero__name {
   margin-top: 1.1rem;
-  font-size: clamp(2.5rem, 6.4vw, 4.75rem);
+  font-size: clamp(2.5rem, 5.6vw, 4.5rem);
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.045em;
@@ -156,17 +176,28 @@
 }
 
 .hero__tagline {
-  margin-top: 1.1rem;
-  max-width: 40ch;
-  font-size: clamp(1.02rem, 1.5vw, 1.2rem);
-  color: var(--text-2);
+  margin-top: 1.25rem;
+  max-width: 30ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text);
   text-wrap: balance;
+}
+
+.hero__intro {
+  margin-top: 1rem;
+  max-width: 52ch;
+  font-size: clamp(0.98rem, 1.2vw, 1.05rem);
+  color: var(--text-2);
+  text-wrap: pretty;
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 0.75rem;
   margin-top: 2rem;
 }
@@ -174,7 +205,6 @@
 .hero__links {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
   gap: 0.5rem 1.4rem;
   margin-top: 1.75rem;
@@ -205,6 +235,13 @@
 
 .hero__place {
   color: var(--text-3);
+}
+
+@media (max-width: 959px) {
+  .hero__actions,
+  .hero__links {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 480px) {
@@ -244,5 +281,12 @@
 
   .marquee__list[aria-hidden] {
     display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero__role {
+    font-size: 0.66rem;
+    letter-spacing: 0;
   }
 }

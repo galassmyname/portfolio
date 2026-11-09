@@ -41,7 +41,7 @@ function personNode(lang: Lang) {
     name: profile.name,
     ...(home && { url: home }),
     ...(SITE_URL && { image: `${SITE_URL}${profile.photo}` }),
-    jobTitle: profile.role[lang],
+    jobTitle: profile.jobTitle[lang],
     description: t.seo.description,
     address: { '@type': 'PostalAddress', addressLocality: 'Dakar', addressCountry: 'SN' },
     // Only institutions where a programme is completed (in-progress training is not "alumni").

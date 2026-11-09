@@ -3,11 +3,11 @@ export type Lang = 'en' | 'fr';
 export type Filter = Category | 'All';
 const en = {
   seo: {
-    title: 'Serigne Fallou Mbaye | Software Engineer & AI/ML',
+    title: 'Serigne Fallou Mbaye | Software Engineering & AI',
     description:
-      'Software engineer in Dakar specialising in AI: machine learning, deep learning and LLMs (Sonatel Academy P1 IA). Full-stack and ML projects on GitHub.',
-    photoAlt: 'Serigne Fallou Mbaye, software engineer specialising in AI and machine learning',
-    ogImageAlt: 'Serigne Fallou Mbaye, Software Engineer, AI & Machine Learning',
+      'Developer in Dakar working on software engineering and artificial intelligence: Master 2 in Information Systems (UADB) and AI training at Sonatel Academy. Web apps, APIs, machine learning and RAG projects on GitHub.',
+    photoAlt: 'Serigne Fallou Mbaye, arms crossed, wearing an Orange Digital Center · Sonatel polo shirt',
+    ogImageAlt: 'Serigne Fallou Mbaye — Software Engineering & Artificial Intelligence',
     knowsAbout: ['Software engineering', 'Artificial intelligence', 'Machine learning', 'Deep learning', 'Full-stack web development', 'Information systems'],
   },
   skipToContent: 'Skip to content',
@@ -29,7 +29,11 @@ const en = {
   },
   hero: {
     badge: 'Open to opportunities',
+    headline: 'Building software solutions and exploring the potential of Artificial Intelligence.',
+    intro:
+      'Master 2 student in Information Systems at UADB and AI trainee at Sonatel Academy (Orange Digital Center). I build web applications and APIs — and now applications powered by machine learning and LLMs.',
     cta: 'View my projects',
+    github: 'GitHub',
     contact: 'Contact me',
     downloadCv: 'Download CV',
     cv: 'CV',
@@ -42,18 +46,20 @@ const en = {
       technologies: 'technologies used in my projects',
     },
     label: 'About',
-    title: 'Software engineer, specialising in AI.',
-    lead: 'Based in Dakar, I build web applications and APIs, and I am specialising in artificial intelligence at Sonatel Academy.',
+    title: 'From software engineering to artificial intelligence.',
+    lead: 'I studied networks and telecommunications, then information systems at Université Alioune Diop de Bambey, where I am now in Master 2. Since July 2026 I have been training in artificial intelligence at Sonatel Academy. I like turning a real need into a working application, and I keep learning by building.',
     highlights: [
-      { title: 'Software engineering', text: 'REST APIs, web apps, containers and deployment pipelines.' },
-      { title: 'Data & AI', text: 'Data preparation, machine learning and deep learning.' },
-      { title: 'Education', text: 'Sonatel Academy P1 IA · Master 2 in Information Systems.' },
+      { title: 'Software engineering', text: 'Web applications, REST APIs, databases and Docker-based deployment.' },
+      { title: 'AI & data', text: 'Data preparation, machine learning, deep learning and LLM applications with retrieval (RAG).' },
+      { title: 'Education', text: 'Master 2 in Information Systems (UADB) · P1 Artificial Intelligence, Sonatel Academy.' },
     ],
   },
   projects: {
     label: 'Projects',
     title: 'Selected work',
-    lede: (total: number) => `${total} public projects on GitHub, the most significant first.`,
+    lede: (total: number) => `${total} projects with public code on GitHub — main projects first, then applications and workshops.`,
+    myRole: 'My role',
+    learning: 'Workshop',
     showAll: (n: number) => `View all projects (${n})`,
     showLess: 'Show fewer',
     showing: (shown: number, total: number) => `${shown} of ${total} shown`,
@@ -74,11 +80,11 @@ const en = {
     reset: 'Reset filters',
     categories: {
       All: 'All',
-      'ML & Data': 'Machine Learning & Data',
-      'Deep Learning & CV': 'Deep Learning & Computer Vision',
-      'Backend & API': 'Backend & API',
+      'Artificial Intelligence': 'Artificial Intelligence',
+      'Machine Learning': 'Machine Learning',
+      'Software Engineering': 'Software Engineering',
       'Full Stack': 'Full Stack',
-      Other: 'Other software',
+      'Backend & Big Data': 'Backend & Big Data',
     } as Record<Filter, string>,
   },
   skills: {
@@ -163,11 +169,11 @@ const en = {
 export type UI = typeof en;
 const fr: UI = {
   seo: {
-    title: 'Serigne Fallou Mbaye | Ingénieur logiciel & IA/ML',
+    title: 'Serigne Fallou Mbaye | Génie logiciel & IA',
     description:
-      'Ingénieur logiciel à Dakar en spécialisation IA : machine learning, deep learning et LLM (Sonatel Academy P1 IA). Projets full stack et ML sur GitHub.',
-    photoAlt: 'Serigne Fallou Mbaye, ingénieur logiciel spécialisé en IA et machine learning',
-    ogImageAlt: 'Serigne Fallou Mbaye, ingénieur logiciel, IA & Machine Learning',
+      'Développeur à Dakar, entre génie logiciel et intelligence artificielle : Master 2 Systèmes d’information (UADB) et formation en IA à la Sonatel Academy. Applications web, API, machine learning et projets RAG sur GitHub.',
+    photoAlt: 'Serigne Fallou Mbaye, bras croisés, en polo Orange Digital Center · Sonatel',
+    ogImageAlt: 'Serigne Fallou Mbaye — Génie logiciel & Intelligence artificielle',
     knowsAbout: ['Génie logiciel', 'Intelligence artificielle', 'Machine learning', 'Deep learning', 'Développement web full stack', 'Systèmes d’information'],
   },
   skipToContent: 'Aller au contenu',
@@ -189,7 +195,11 @@ const fr: UI = {
   },
   hero: {
     badge: 'Ouvert aux opportunités',
+    headline: 'Je conçois des solutions logicielles et j’explore le potentiel de l’intelligence artificielle.',
+    intro:
+      'Étudiant en Master 2 Systèmes d’information à l’UADB et apprenant en IA à la Sonatel Academy (Orange Digital Center). Je développe des applications web et des API — et désormais des applications fondées sur le machine learning et les LLM.',
     cta: 'Voir mes projets',
+    github: 'GitHub',
     contact: 'Me contacter',
     downloadCv: 'Télécharger mon CV',
     cv: 'CV',
@@ -202,18 +212,20 @@ const fr: UI = {
       technologies: 'technologies utilisées dans mes projets',
     },
     label: 'À propos',
-    title: 'Ingénieur logiciel, spécialisé en IA.',
-    lead: 'Basé à Dakar, je développe des applications web et des API, et je me spécialise en intelligence artificielle à la Sonatel Academy.',
+    title: 'Du génie logiciel à l’intelligence artificielle.',
+    lead: 'J’ai étudié les réseaux et télécommunications, puis les systèmes d’information à l’Université Alioune Diop de Bambey, où je suis aujourd’hui en Master 2. Depuis juillet 2026, je me forme à l’intelligence artificielle à la Sonatel Academy. J’aime transformer un besoin réel en application qui fonctionne, et je continue d’apprendre en construisant.',
     highlights: [
-      { title: 'Génie logiciel', text: 'API REST, applications web, conteneurs et pipelines de déploiement.' },
-      { title: 'Données & IA', text: 'Préparation des données, machine learning et deep learning.' },
-      { title: 'Formation', text: 'Sonatel Academy P1 IA · Master 2 Systèmes d’information.' },
+      { title: 'Génie logiciel', text: 'Applications web, API REST, bases de données et déploiement avec Docker.' },
+      { title: 'IA & données', text: 'Préparation des données, machine learning, deep learning et applications LLM avec recherche documentaire (RAG).' },
+      { title: 'Formation', text: 'Master 2 Systèmes d’information (UADB) · P1 Intelligence artificielle, Sonatel Academy.' },
     ],
   },
   projects: {
     label: 'Projets',
     title: 'Projets sélectionnés',
-    lede: (total: number) => `${total} projets publics sur GitHub, les plus significatifs en premier.`,
+    lede: (total: number) => `${total} projets au code public sur GitHub — les projets principaux d’abord, puis les applications et les ateliers.`,
+    myRole: 'Mon rôle',
+    learning: 'Atelier',
     showAll: (n: number) => `Voir tous les projets (${n})`,
     showLess: 'Voir moins',
     showing: (shown: number, total: number) => `${shown} sur ${total} affichés`,
@@ -234,11 +246,11 @@ const fr: UI = {
     reset: 'Réinitialiser les filtres',
     categories: {
       All: 'Tous',
-      'ML & Data': 'Machine Learning & Données',
-      'Deep Learning & CV': 'Deep Learning & vision par ordinateur',
-      'Backend & API': 'Backend & API',
-      'Full Stack': 'Full Stack',
-      Other: 'Autres projets logiciels',
+      'Artificial Intelligence': 'Intelligence artificielle',
+      'Machine Learning': 'Machine Learning',
+      'Software Engineering': 'Génie logiciel',
+      'Full Stack': 'Full stack',
+      'Backend & Big Data': 'Backend & Big Data',
     },
   },
   skills: {
