@@ -44,7 +44,7 @@ After changing any of them, rebuild (`npm run build`) or redeploy.
 
 ### Deploying
 
-Build command `npm run build`, output directory `dist`, and set the variables above in the host's settings. Unknown URLs are served `404.html` automatically by Netlify, Vercel, Cloudflare Pages and GitHub Pages.
+Build command `npm run build`, output directory `dist` — both are set in `netlify.toml`, together with `VITE_SITE_URL` for the Netlify address. Set `VITE_WEB3FORMS_ACCESS_KEY` in the Netlify UI. Unknown URLs are served `404.html` automatically by Netlify, Vercel, Cloudflare Pages and GitHub Pages.
 
 ## Editing content
 
@@ -53,15 +53,19 @@ All content lives in `src/data/`. Components never hard-code it.
 | File | Contents |
 |---|---|
 | `profile.ts` | Name, contact details, links, tagline, "Currently" items, education with dates from the CV (English and French). |
-| `projects.ts` | Every project. `featured: true` puts it in Featured Projects (aim for 4–6); every other project appears in All Projects. Display order comes from the `ORDER` list. Projects with `context` get a case-study page at `/en/projects/<slug>/` and `/fr/projects/<slug>/`. Categories: AI / ML, Full Stack, Backend, Frontend, Data, DevOps, Desktop — a filter only appears when at least one project uses it. |
+| `projects.ts` | Every project. `featured: true` puts it in Featured Projects (aim for 4–6); every other project appears in All Projects. Display order comes from the `ORDER` list. Projects with `context` get a case-study page at `/en/projects/<slug>/` and `/fr/projects/<slug>/`. Categories: Artificial Intelligence, Machine Learning, Software Engineering, Full Stack, Backend & Big Data — a filter only appears when at least one project uses it. `learning: true` shows a compact card (workshops); `repoOwner` + `role` describe team projects hosted by a teammate; `draft: true` keeps a project off the site until its repository is public. |
 | `skills.ts` | Skill groups. Each skill states its evidence (`match` technologies or `projects` slugs) and/or `training: true`. Skills used in public projects show a count; skills covered only in training are labelled "In training"; anything else is not shown. |
-| `training.ts` | Sonatel Academy P1 IA programme (4 groups, 23 modules), shown under Education & Training. `repos` links a module to related public work; modules without it are covered in training only. |
 | `projects.fr.ts` | French text for each project, keyed by slug (same facts, French wording). |
 | `src/i18n/ui.ts` | Interface strings in English and French. TypeScript flags any missing French key. |
 
 ## Photo
 
-Place the portrait at `public/images/profile.jpg` (portrait orientation, ideally 4:5, e.g. 800 × 1000). It appears in the hero, in an arched frame; until the file exists, a monogram frame is shown. The current file was extracted from the CV (395 × 395 px) — replace it with a higher-resolution portrait for sharper rendering.
+The hero shows the official portrait from the Orange Digital Center photo session, full frame (2:3, never cropped or filtered):
+
+- `public/images/serigne-fallou-mbaye-odc-{480,720,1080}.webp` (served through `srcset`)
+- `public/images/serigne-fallou-mbaye-odc.jpg` (720 × 1080 fallback)
+
+`public/og-image.png` (1200 × 630, social previews) uses the same photo. To change the portrait, regenerate these files from the original and keep the 2:3 ratio.
 
 ## Contact form
 
