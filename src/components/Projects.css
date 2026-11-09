@@ -1,0 +1,849 @@
+/* ─── Projects: one compact grid ─────────────────────────────
+   Featured projects come first (with a badge); the rest are revealed in
+   place with "View all". Cards keep a fixed rhythm: meta, title, two lines
+   of description, three technologies, links. */
+
+.index {
+  scroll-margin-top: calc(var(--nav-h) + 1rem);
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'chips search'
+    'status status';
+  gap: 1rem 2rem;
+  align-items: center;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 22px;
+  background: rgba(21, 31, 50, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.filters__chips {
+  grid-area: chips;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-2);
+  transition:
+    border-color 0.2s var(--ease),
+    color 0.2s var(--ease),
+    background-color 0.2s var(--ease);
+}
+
+.chip:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.chip__count {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  opacity: 0.75;
+}
+
+.filters__search {
+  grid-area: search;
+  position: relative;
+  width: min(100%, 18rem);
+}
+
+.filters__search svg {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  width: 0.95rem;
+  height: 0.95rem;
+  transform: translateY(-50%);
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+.filters__search input {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 0.95rem 0 2.5rem;
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  transition:
+    border-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+}
+
+.filters__search input::placeholder {
+  color: var(--text-3);
+}
+
+.filters__search input:hover {
+  border-color: var(--border-strong);
+}
+
+.filters__search input:focus {
+  outline: none;
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.2);
+}
+
+.filters__status {
+  grid-area: status;
+  color: var(--text-3);
+}
+
+@media (max-width: 760px) {
+  .filters {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'search'
+      'chips'
+      'status';
+  }
+
+  .filters__search {
+    width: 100%;
+  }
+}
+
+/* ─── Grid ────────────────────────────────────────────────────
+   Default view is a bento: the 1st and 4th projects are wide (cover and
+   text side by side), and while collapsed the last tile invites to see the
+   rest. Filtering or searching switches to a plain, even grid. */
+
+.index__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.index__grid--bento .card--wide,
+.index__grid--bento .card--wide-flip {
+  grid-column: span 2;
+}
+
+/* ─── Card ─── */
+
+.card {
+  --tone: 34, 211, 238;
+  animation: card-in 0.6s var(--ease) both;
+}
+
+.card--tone-violet {
+  --tone: 167, 139, 250;
+}
+.card--tone-emerald {
+  --tone: 52, 211, 153;
+}
+.card--tone-indigo {
+  --tone: 129, 140, 248;
+}
+.card--tone-amber {
+  --tone: 251, 191, 36;
+}
+
+.card article {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 35%),
+    rgba(17, 26, 44, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition:
+    border-color 0.45s var(--ease),
+    box-shadow 0.45s var(--ease),
+    transform 0.45s var(--ease);
+}
+
+.card article.spot::after {
+  inset: 0;
+}
+
+.card article:hover,
+.card article:focus-within {
+  border-color: rgba(var(--tone), 0.35);
+  box-shadow:
+    0 34px 60px -34px rgba(0, 0, 0, 0.9),
+    0 24px 60px -36px rgba(var(--tone), 0.5);
+  transform: translateY(-6px);
+}
+
+/* ─── Media: the cover sits inset in the card ─── */
+
+.card__media {
+  position: relative;
+  display: flex;
+  padding: 0.55rem 0.55rem 0;
+}
+
+.card__badge {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem 0.25rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(11, 17, 32, 0.72);
+  font-size: 0.64rem;
+  color: var(--text);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.card__badge svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: #fbbf24;
+}
+
+/* ─── Cover: tinted backdrop + floating window ─── */
+
+.cover {
+  --tone: inherit;
+  position: relative;
+  flex: 1;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 18px;
+  background:
+    radial-gradient(90% 80% at 12% 0%, rgba(var(--tone), 0.34), transparent 60%),
+    radial-gradient(80% 70% at 100% 100%, rgba(129, 140, 248, 0.16), transparent 60%),
+    #0d1628;
+}
+
+/* Fine grid on the backdrop. */
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 30% 20%, #000, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 70% at 30% 20%, #000, transparent 75%);
+}
+
+.cover__window {
+  position: absolute;
+  top: 13%;
+  right: 8%;
+  bottom: -10%;
+  left: 8%;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: #0b1324;
+  box-shadow:
+    0 30px 50px -20px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(var(--tone), 0.06);
+  transform: translateY(4px);
+  transition: transform 0.7s var(--ease);
+}
+
+.card article:hover .cover__window {
+  transform: translateY(-6px) scale(1.015);
+}
+
+.cover__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 9px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cover__bar i {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: rgba(248, 113, 113, 0.75);
+}
+
+.cover__bar i:nth-child(2) {
+  background: rgba(251, 191, 36, 0.75);
+}
+
+.cover__bar i:nth-child(3) {
+  background: rgba(52, 211, 153, 0.75);
+}
+
+.cover__url {
+  position: absolute;
+  left: 50%;
+  max-width: 58%;
+  overflow: hidden;
+  padding: 1px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--text-3);
+  transform: translateX(-50%);
+}
+
+.cover__screen {
+  position: absolute;
+  inset: 22px 0 0;
+  overflow: hidden;
+}
+
+.cover__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.8s var(--ease);
+}
+
+.card article:hover .cover__img {
+  transform: scale(1.04);
+}
+
+/* Illustration inside the window */
+.cover__art-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(70% 90% at 50% 45%, rgba(var(--tone), 0.14), transparent 70%),
+    #0e1829;
+}
+
+.cover__art {
+  width: 100%;
+  height: 100%;
+}
+
+.cover__motif {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art__m {
+  stroke: rgba(148, 163, 184, 0.22);
+}
+.art__l {
+  stroke: rgba(var(--tone), 0.6);
+}
+.art__f {
+  fill: rgba(var(--tone), 0.12);
+}
+.art__s {
+  fill: rgba(var(--tone), 0.8);
+  stroke: none;
+}
+.art__s.art__dim {
+  fill: rgba(var(--tone), 0.28);
+}
+.art__dash {
+  stroke-dasharray: 5 6;
+}
+
+.cover__badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border: 1px solid rgba(var(--tone), 0.45);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(var(--tone), 0.22), rgba(14, 24, 41, 0.95) 70%);
+  color: rgb(var(--tone));
+  box-shadow: 0 12px 30px -10px rgba(var(--tone), 0.55);
+  transform: translate(-50%, -50%);
+  transition: transform 0.5s var(--ease);
+}
+
+.cover__badge svg {
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+.card article:hover .cover__badge {
+  transform: translate(-50%, -50%) scale(1.08) rotate(-4deg);
+}
+
+/* ─── Body ─── */
+
+.card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1.1rem 1.3rem 1.15rem;
+}
+
+.card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.68rem;
+}
+
+.card__cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: rgb(var(--tone));
+}
+
+.card__cat::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: rgb(var(--tone));
+  box-shadow: 0 0 10px rgba(var(--tone), 0.8);
+}
+
+.card__year {
+  flex: none;
+  color: var(--text-3);
+}
+
+.card__title {
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.card__title a {
+  transition: color 0.25s var(--ease);
+}
+
+.card__title a:hover {
+  color: rgb(var(--tone));
+}
+
+/* Two lines max; the full description is on the case study / repository. */
+.card__desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  margin: 0.45rem 0 1rem;
+  font-size: 0.89rem;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+/* Technologies: logos in round chips, names for those without a logo. */
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+
+.card__logo,
+.card__tag {
+  display: inline-grid;
+  place-items: center;
+  height: 2rem;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-2);
+  transition:
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.card__logo {
+  width: 2rem;
+}
+
+.card__logo .tech-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  color: currentColor;
+}
+
+.card__logo:hover {
+  color: var(--text);
+  border-color: rgba(var(--tone), 0.5);
+  transform: translateY(-2px);
+}
+
+.card__tag {
+  padding: 0 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+}
+
+.card__tag--more {
+  border-style: dashed;
+  background: none;
+  color: var(--text-3);
+}
+
+.tech-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  flex: none;
+  color: var(--text-2);
+}
+
+/* Links */
+.card__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--accent);
+  transition: color 0.25s var(--ease);
+}
+
+.card__cta svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  transition: transform 0.3s var(--ease);
+}
+
+.card__cta:hover {
+  color: var(--primary-hover);
+}
+
+.card__cta:hover svg {
+  transform: translateX(3px);
+}
+
+.card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.card__icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 2.15rem;
+  height: 2.15rem;
+  padding: 0 0.6rem;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--text-2);
+  transition:
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    background-color 0.25s var(--ease);
+}
+
+.card__icon-link svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: none;
+}
+
+.card__icon-link:hover {
+  color: var(--text);
+  border-color: rgba(var(--tone), 0.5);
+  background: rgba(var(--tone), 0.08);
+}
+
+.card__icon-link--demo {
+  border-color: rgba(52, 211, 153, 0.35);
+  color: #6ee7b7;
+}
+
+/* ─── Wide cards (bento leads) ─── */
+
+.index__grid--bento .card--wide article,
+.index__grid--bento .card--wide-flip article {
+  flex-direction: row;
+}
+
+.index__grid--bento .card--wide-flip article {
+  flex-direction: row-reverse;
+}
+
+.index__grid--bento .card--wide .card__media,
+.index__grid--bento .card--wide-flip .card__media {
+  flex: 1.25 1 0;
+  min-width: 0;
+  padding: 0.55rem;
+}
+
+.index__grid--bento .card--wide .cover,
+.index__grid--bento .card--wide-flip .cover {
+  aspect-ratio: auto;
+  min-height: 19rem;
+}
+
+/* In the tall cover of a wide card, the window keeps a screen-like ratio and
+   floats in the middle instead of stretching. */
+.index__grid--bento .card--wide .cover,
+.index__grid--bento .card--wide-flip .cover {
+  display: grid;
+  place-items: center;
+}
+
+.index__grid--bento .card--wide .cover__window,
+.index__grid--bento .card--wide-flip .cover__window {
+  position: relative;
+  inset: auto;
+  width: 88%;
+  aspect-ratio: 16 / 10.5;
+  transform: none;
+}
+
+.index__grid--bento .card--wide article:hover .cover__window,
+.index__grid--bento .card--wide-flip article:hover .cover__window {
+  transform: translateY(-6px) scale(1.015);
+}
+
+.index__grid--bento .card--wide .card__body,
+.index__grid--bento .card--wide-flip .card__body {
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+  padding: 1.75rem 1.75rem 1.6rem;
+}
+
+.index__grid--bento .card--wide .card__title,
+.index__grid--bento .card--wide-flip .card__title {
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+}
+
+.index__grid--bento .card--wide .card__desc,
+.index__grid--bento .card--wide-flip .card__desc {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  font-size: 0.95rem;
+}
+
+.index__grid--bento .card--wide .card__tags,
+.index__grid--bento .card--wide-flip .card__tags {
+  margin-top: 0.25rem;
+}
+
+/* ─── "See all" tile + collapse row ─── */
+
+.index__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1.9rem;
+  border: 1px dashed rgba(var(--accent-rgb), 0.35);
+  border-radius: 24px;
+  background:
+    radial-gradient(80% 70% at 100% 0%, rgba(var(--accent-rgb), 0.16), transparent 65%),
+    radial-gradient(70% 60% at 0% 100%, rgba(129, 140, 248, 0.12), transparent 65%),
+    rgba(17, 26, 44, 0.6);
+  animation: card-in 0.6s 0.3s var(--ease) both;
+}
+
+.index__cta-count {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5vw, 4rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background: linear-gradient(120deg, #ffffff, var(--accent) 60%, #818cf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.index__cta-text {
+  max-width: 28ch;
+  margin-top: 0.6rem;
+  color: var(--text-2);
+}
+
+.index__cta .index__more {
+  margin-top: 1.4rem;
+}
+
+.index__cta .index__more-note {
+  margin-top: 0.75rem;
+}
+
+.index__more-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.75rem;
+}
+
+.index__more-note {
+  color: var(--text-3);
+}
+
+.index__empty {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 2.5rem 0;
+  color: var(--text-2);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 1024px) {
+  .index__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .index__grid--bento .index__cta {
+    grid-column: span 2;
+    align-items: center;
+    text-align: center;
+  }
+
+  .index__cta-text {
+    max-width: 40ch;
+  }
+}
+
+@media (max-width: 760px) {
+  .index__grid--bento .card--wide article,
+  .index__grid--bento .card--wide-flip article {
+    flex-direction: column;
+  }
+
+  .index__grid--bento .card--wide .card__media,
+  .index__grid--bento .card--wide-flip .card__media {
+    flex: none;
+    padding: 0.55rem 0.55rem 0;
+  }
+
+  .index__grid--bento .card--wide .cover,
+  .index__grid--bento .card--wide-flip .cover {
+    aspect-ratio: 16 / 10;
+    min-height: 0;
+  }
+
+  .index__grid--bento .card--wide .card__body,
+  .index__grid--bento .card--wide-flip .card__body {
+    padding: 1.1rem 1.3rem 1.15rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .index__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .index__grid--bento .card--wide,
+  .index__grid--bento .card--wide-flip,
+  .index__grid--bento .index__cta {
+    grid-column: auto;
+  }
+
+  .card__body {
+    padding: 1rem 1.1rem 1.05rem;
+  }
+
+  .cover {
+    aspect-ratio: 16 / 9;
+  }
+
+  .cover__window {
+    top: 22%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .index__cta {
+    animation: none;
+  }
+
+  .card article:hover,
+  .card article:focus-within,
+  .card article:hover .cover__img,
+  .card article:hover .cover__window,
+  .card__logo:hover {
+    transform: none;
+  }
+
+  .card article:hover .cover__badge {
+    transform: translate(-50%, -50%);
+  }
+}

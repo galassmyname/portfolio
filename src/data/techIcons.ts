@@ -1,0 +1,55 @@
+/**
+ * Technology logos. The SVG paths come from Simple Icons
+ * (https://simpleicons.org, CC0 1.0) and live in one sprite,
+ * public/icons/tech.svg, so they stay out of the JavaScript bundle and are
+ * cached once. A technology without an entry is shown as a plain text badge.
+ */
+const byTech: Record<string, string> = {
+  Python: 'python',
+  Jupyter: 'jupyter',
+  pandas: 'pandas',
+  TypeScript: 'typescript',
+  MySQL: 'mysql',
+  Angular: 'angular',
+  JWT: 'jsonwebtokens',
+  'scikit-learn': 'scikitlearn',
+  Express: 'express',
+  MongoDB: 'mongodb',
+  NumPy: 'numpy',
+  React: 'react',
+  PostgreSQL: 'postgresql',
+  Kubernetes: 'kubernetes',
+  'Node.js': 'nodedotjs',
+  Docker: 'docker',
+  'TensorFlow / Keras': 'tensorflow',
+  'Next.js': 'nextdotjs',
+  'Tailwind CSS': 'tailwindcss',
+  Nginx: 'nginx',
+  PHP: 'php',
+  Java: 'openjdk',
+  'Java 17': 'openjdk',
+  HTML: 'html5',
+  CSS: 'css',
+  JavaScript: 'javascript',
+  Leaflet: 'leaflet',
+  'Spring Boot': 'springboot',
+  'Spring Cloud Gateway': 'spring',
+  'Docker Compose': 'docker',
+  'Swagger / OpenAPI': 'swagger',
+  Prisma: 'prisma',
+  Cloudinary: 'cloudinary',
+  Supabase: 'supabase',
+  Django: 'django',
+  'Django REST Framework': 'django',
+  Ansible: 'ansible',
+  spaCy: 'spacy',
+  Laravel: 'laravel',
+  Livewire: 'livewire',
+  SQLite: 'sqlite',
+  OpenShift: 'redhatopenshift',
+  Bash: 'gnubash',
+  Linux: 'linux',
+};
+
+/** Sprite symbol id for a technology name as written in projects.ts / skills.ts. */
+export const techIcon = (tech: string): string | undefined => byTech[tech];

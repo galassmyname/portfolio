@@ -1,0 +1,248 @@
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(3rem, 8vh, 5rem);
+  min-height: min(100svh, 60rem);
+  padding: calc(var(--nav-h) + clamp(2rem, 6vh, 4rem)) 0 clamp(2rem, 5vh, 3rem);
+  overflow: hidden;
+  background: radial-gradient(680px 440px at 50% 28%, rgba(var(--accent-rgb), 0.09), transparent 70%);
+}
+
+/* Faint engineering grid behind the hero — the site's visual signature. */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 65% at 50% 40%, #000 25%, transparent 75%);
+  mask-image: radial-gradient(ellipse 60% 65% at 50% 40%, #000 25%, transparent 75%);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* One-off entrance, staggered by --i. */
+.hero__in {
+  animation: hero-in 0.7s var(--ease) both;
+  animation-delay: calc(0.15s + var(--i, 0) * 0.08s);
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.hero__role {
+  margin-top: 2.6rem;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.06);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+
+.hero__role span {
+  margin-inline: 0.2rem;
+  color: var(--text-3);
+}
+
+.hero__name {
+  margin-top: 1.1rem;
+  font-size: clamp(2.5rem, 6.4vw, 4.75rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  background: linear-gradient(180deg, #ffffff 30%, #b6c3d6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Last name in an animated cyan → indigo gradient (one slow pass, then rests). */
+.hero__accent {
+  background: linear-gradient(100deg, #67e8f9, var(--accent) 35%, #818cf8 70%, #67e8f9);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: hero-shine 2.4s 0.6s var(--ease) both;
+}
+
+@keyframes hero-shine {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* ─── Technology marquee ─── */
+
+.marquee {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__list {
+  display: flex;
+  gap: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.marquee__list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 999px;
+  background: rgba(21, 31, 50, 0.55);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  color: var(--text-2);
+  transition:
+    color 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+
+.marquee__list li:hover {
+  color: var(--text);
+  border-color: rgba(var(--accent-rgb), 0.35);
+}
+
+.marquee .tech-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  color: currentColor;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.hero__tagline {
+  margin-top: 1.1rem;
+  max-width: 40ch;
+  font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+  color: var(--text-2);
+  text-wrap: balance;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.hero__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem 1.4rem;
+  margin-top: 1.75rem;
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+
+.hero__links a,
+.hero__place {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.hero__links a {
+  transition: color 0.2s var(--ease);
+}
+
+.hero__links a:hover {
+  color: var(--accent);
+}
+
+.hero__links svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+
+.hero__place {
+  color: var(--text-3);
+}
+
+@media (max-width: 480px) {
+  .hero__actions {
+    width: 100%;
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__in,
+  .hero__accent {
+    animation: none;
+  }
+
+  /* No scrolling: the strip simply wraps. */
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .marquee__track {
+    width: auto;
+    animation: none;
+    justify-content: center;
+  }
+
+  .marquee__list {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-inline: var(--gutter);
+  }
+
+  .marquee__list[aria-hidden] {
+    display: none;
+  }
+}

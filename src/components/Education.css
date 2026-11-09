@@ -1,0 +1,359 @@
+/* ─── Education tree ─────────────────────────────────────────
+   Desktop: central line, cards alternating left / right, each joined to the
+   line by a short branch and a node. Mobile: one line on the left.
+   Current steps get a filled cyan node; completed ones a hollow node. */
+
+.tree {
+  --node: 14px;
+  --gap: 56px; /* space between a card and the central line */
+  position: relative;
+}
+
+.tree__line {
+  position: absolute;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent) 0%, rgba(var(--accent-rgb), 0.35) 30%, var(--border) 70%, transparent);
+  transform-origin: top;
+}
+
+.tree__list {
+  display: grid;
+  gap: 2rem;
+}
+
+.tree__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Desktop: each card starts before the previous one (on the other side)
+   ends, so the two columns interlock instead of leaving empty rows. */
+.tree__item + .tree__item {
+  margin-top: -4.5rem;
+}
+
+/* Rows overlap, so only the cards (not the empty half of each row) take
+   pointer events — otherwise a row would cover links in the card above. */
+.tree__item {
+  pointer-events: none;
+}
+
+.tree__card {
+  pointer-events: auto;
+}
+
+.tree__card {
+  position: relative;
+  padding: 1.25rem 1.4rem 1.35rem;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 35%),
+    rgba(21, 31, 50, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease);
+}
+
+.tree__item--left .tree__card {
+  grid-column: 1;
+  margin-right: var(--gap);
+}
+
+.tree__item--right .tree__card {
+  grid-column: 2;
+  margin-left: var(--gap);
+}
+
+/* Node on the central line, level with the top of the card. */
+.tree__node {
+  position: absolute;
+  top: 1.9rem;
+  left: 50%;
+  z-index: 1;
+  width: var(--node);
+  height: var(--node);
+  margin-left: calc(var(--node) / -2);
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  background: var(--bg);
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+}
+
+.tree__node--current {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 5px rgba(var(--accent-rgb), 0.14);
+}
+
+/* Branch from the node to the card edge. */
+.tree__branch {
+  position: absolute;
+  top: calc(1.9rem + var(--node) / 2 - 0.5px);
+  width: calc(var(--gap) - var(--node) / 2);
+  height: 1px;
+  background: var(--border-strong);
+  transition: transform 0.6s 0.2s var(--ease);
+}
+
+.tree__item--left .tree__branch {
+  right: calc(50% + var(--node) / 2);
+  transform-origin: right;
+}
+
+.tree__item--right .tree__branch {
+  left: calc(50% + var(--node) / 2);
+  transform-origin: left;
+}
+
+/* The AI training: the most recent step, slightly emphasised. */
+.tree__item--featured .tree__card {
+  border-color: rgba(var(--accent-rgb), 0.35);
+  background:
+    linear-gradient(180deg, rgba(var(--accent-rgb), 0.06), transparent 45%),
+    var(--card);
+}
+
+.tree__item--featured .tree__branch {
+  background: rgba(var(--accent-rgb), 0.5);
+}
+
+/* Hover: the card lifts a little and its node responds. */
+.tree__item:hover .tree__card {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-hover);
+}
+
+.tree__item--featured:hover .tree__card {
+  border-color: rgba(var(--accent-rgb), 0.55);
+}
+
+.tree__item:hover .tree__node {
+  transform: scale(1.2);
+  border-color: var(--accent);
+}
+
+/* Card content */
+.tree__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.tree__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--accent);
+}
+
+.tree__icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.tree__period {
+  color: var(--text-2);
+  font-size: 0.78rem;
+}
+
+.tree__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-3);
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.tree__status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-3);
+}
+
+.tree__status--current {
+  border-color: rgba(16, 185, 129, 0.35);
+  color: var(--text-2);
+}
+
+.tree__status--current::before {
+  border-color: var(--emerald);
+  background: var(--emerald);
+}
+
+.tree__title {
+  font-size: clamp(1.15rem, 1.7vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.tree__credential {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--accent-2-text);
+}
+
+.tree__institution {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  color: var(--text-2);
+  font-size: 0.95rem;
+}
+
+.tree__institution svg {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  color: var(--text-3);
+}
+
+.tree__desc {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-2);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* ─── Reveal on scroll ────────────────────────────────────────
+   Builds on the shared [data-reveal] system (base.css): cards slide in from
+   their own side, the line draws downwards, branches extend from the line. */
+
+.js .tree__line[data-reveal] {
+  opacity: 1;
+  transform: scaleY(0);
+  transition: transform 1.4s var(--ease);
+}
+
+.js .tree__line[data-reveal].is-visible {
+  transform: none;
+}
+
+.js .tree__item--left[data-reveal] {
+  transform: translateX(-24px);
+}
+
+.js .tree__item--right[data-reveal] {
+  transform: translateX(24px);
+}
+
+.js .tree__item[data-reveal].is-visible {
+  transform: none;
+}
+
+.js .tree__item[data-reveal]:not(.is-visible) .tree__branch {
+  transform: scaleX(0);
+}
+
+.js .tree__item[data-reveal]:not(.is-visible) .tree__node {
+  transform: scale(0.4);
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+
+/* Mobile and small tablets: a single line on the left. */
+@media (max-width: 860px) {
+  .tree {
+    --gap: 2.25rem;
+    --rail: 7px; /* centre of the line from the left edge */
+  }
+
+  .tree__line {
+    left: var(--rail);
+  }
+
+  .tree__list {
+    gap: 1.25rem;
+  }
+
+  .tree__item {
+    grid-template-columns: 1fr;
+  }
+
+  .tree__item + .tree__item {
+    margin-top: 0;
+  }
+
+  .tree__item--left .tree__card,
+  .tree__item--right .tree__card {
+    grid-column: 1;
+    margin: 0 0 0 var(--gap);
+  }
+
+  .tree__node {
+    left: var(--rail);
+  }
+
+  .tree__item--left .tree__branch,
+  .tree__item--right .tree__branch {
+    left: calc(var(--rail) + var(--node) / 2);
+    right: auto;
+    width: calc(var(--gap) - var(--rail) - var(--node) / 2);
+    transform-origin: left;
+  }
+
+  .js .tree__item--left[data-reveal],
+  .js .tree__item--right[data-reveal] {
+    transform: translateX(16px);
+  }
+}
+
+@media (max-width: 560px) {
+  .tree__card {
+    padding: 1.2rem 1.1rem 1.25rem;
+  }
+
+  .tree__head {
+    flex-wrap: wrap;
+    gap: 0.5rem 0.65rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .tree__line[data-reveal],
+  .js .tree__item[data-reveal] {
+    transform: none;
+  }
+
+  .js .tree__item[data-reveal]:not(.is-visible) .tree__branch,
+  .js .tree__item[data-reveal]:not(.is-visible) .tree__node {
+    transform: none;
+  }
+
+  .tree__item:hover .tree__card,
+  .tree__item:hover .tree__node {
+    transform: none;
+  }
+}
