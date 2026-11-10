@@ -47,11 +47,11 @@ const en = {
     },
     label: 'About',
     title: 'From software engineering to artificial intelligence.',
-    lead: 'I studied networks and telecommunications, then information systems at Université Alioune Diop de Bambey, where I am now in Master 2. Since July 2026 I have been training in artificial intelligence at Sonatel Academy. I like turning a real need into a working application, and I keep learning by building.',
+    lead: 'I studied networks and telecommunications, then information systems at Université Alioune Diop de Bambey, where I am now in Master 2. In summer 2025 I worked as a full stack developer intern at Volkeno, and since July 2026 I have been training in artificial intelligence at Sonatel Academy. I like turning a real need into a working application, and I keep learning by building.',
     highlights: [
       { title: 'Software engineering', text: 'Web applications, REST APIs, databases and Docker-based deployment.' },
       { title: 'AI & data', text: 'Data preparation, machine learning, deep learning and LLM applications with retrieval (RAG).' },
-      { title: 'Education', text: 'Master 2 in Information Systems (UADB) · P1 Artificial Intelligence, Sonatel Academy.' },
+      { title: 'Education', text: 'Master 2 in Information Systems (UADB) · P1 Artificial Intelligence, Sonatel Academy · AI certificate (FORCE-N programme).' },
     ],
   },
   projects: {
@@ -99,7 +99,7 @@ const en = {
   },
   education: {
     label: 'Education',
-    title: 'Education & Training',
+    title: 'Education & experience',
     inProgress: 'In progress',
     completed: 'Completed',
   },
@@ -213,11 +213,11 @@ const fr: UI = {
     },
     label: 'À propos',
     title: 'Du génie logiciel à l’intelligence artificielle.',
-    lead: 'J’ai étudié les réseaux et télécommunications, puis les systèmes d’information à l’Université Alioune Diop de Bambey, où je suis aujourd’hui en Master 2. Depuis juillet 2026, je me forme à l’intelligence artificielle à la Sonatel Academy. J’aime transformer un besoin réel en application qui fonctionne, et je continue d’apprendre en construisant.',
+    lead: 'J’ai étudié les réseaux et télécommunications, puis les systèmes d’information à l’Université Alioune Diop de Bambey, où je suis aujourd’hui en Master 2. À l’été 2025, j’ai fait un stage de développeur full stack chez Volkeno, et depuis juillet 2026 je me forme à l’intelligence artificielle à la Sonatel Academy. J’aime transformer un besoin réel en application qui fonctionne, et je continue d’apprendre en construisant.',
     highlights: [
       { title: 'Génie logiciel', text: 'Applications web, API REST, bases de données et déploiement avec Docker.' },
       { title: 'IA & données', text: 'Préparation des données, machine learning, deep learning et applications LLM avec recherche documentaire (RAG).' },
-      { title: 'Formation', text: 'Master 2 Systèmes d’information (UADB) · P1 Intelligence artificielle, Sonatel Academy.' },
+      { title: 'Formation', text: 'Master 2 Systèmes d’information (UADB) · P1 Intelligence artificielle, Sonatel Academy · Certificat en IA (programme FORCE-N).' },
     ],
   },
   projects: {

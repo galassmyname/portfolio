@@ -8,7 +8,7 @@
   NODE_VERSION = "20"
   # Public address of the site: used for canonical URLs, hreflang, Open Graph,
   # JSON-LD and sitemap.xml. Not a secret. Change it if a custom domain is added.
-  VITE_SITE_URL = "https://dazzling-klepon-5bf509.netlify.app"
+  VITE_SITE_URL = "https://serignefalloumbaye-porfolio.netlify.app"
   # VITE_WEB3FORMS_ACCESS_KEY is set in the Netlify UI (Site settings → Environment variables).
 
 # Hashed build assets and self-hosted fonts never change: cache them for a year.

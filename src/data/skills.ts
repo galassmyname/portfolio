@@ -89,6 +89,7 @@ const groups: SkillGroupDef[] = [
       { name: 'Kubernetes', match: ['Kubernetes'] },
       { name: 'CI/CD (Jenkins, Ansible)', match: ['Jenkins', 'Ansible'], icon: 'Ansible' },
       { name: 'Linux & Bash', match: ['Linux', 'Bash'], training: true, icon: 'Linux' },
+      { name: 'KNIME', training: true, icon: 'KNIME' },
       { name: 'Hadoop (HDFS, YARN, MapReduce)', match: ['Hadoop'], icon: 'Hadoop' },
       { name: 'Apache Spark / PySpark', match: ['PySpark', 'Apache Spark'], icon: 'Apache Spark' },
     ],

@@ -1,7 +1,7 @@
 import { education } from '../data/profile';
 import { revealDelay } from '../hooks/useReveal';
 import { useLang, useT } from '../i18n/LanguageContext';
-import { ChipIcon, GraduationIcon, InstitutionIcon } from './Icons';
+import { BriefcaseIcon, ChipIcon, GraduationIcon, InstitutionIcon } from './Icons';
 import SectionHeader from './SectionHeader';
 import './Education.css';
 
@@ -26,7 +26,7 @@ export default function Education() {
             {education.map((e, i) => {
               const side = i % 2 === 0 ? 'left' : 'right';
               const training = e.kind === 'training';
-              const Icon = training ? ChipIcon : GraduationIcon;
+              const Icon = training ? ChipIcon : e.kind === 'work' ? BriefcaseIcon : GraduationIcon;
               const current = Boolean(e.inProgress);
               return (
                 <li

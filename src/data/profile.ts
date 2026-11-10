@@ -12,7 +12,7 @@ export const profile = {
   location: { en: 'Dakar, Senegal', fr: 'Dakar, Sénégal' } as Localized,
   githubUser: 'galassmyname',
   githubUrl: 'https://github.com/galassmyname',
-  linkedinUrl: 'https://sn.linkedin.com/in/serigne-fallou-mbaye-200a57280',
+  linkedinUrl: 'https://www.linkedin.com/in/serignefalloumbaye',
   phone: { display: '+221 77 445 09 21', href: 'tel:+221774450921' },
   /** CV (French, PDF) served from public/cv/. */
   cv: {
@@ -29,8 +29,8 @@ export const profile = {
 };
 
 export type EducationEntry = {
-  /** 'training' = professional programme, 'degree' = university diploma (sets the icon). */
-  kind: 'training' | 'degree';
+  /** 'training' = professional programme, 'degree' = university diploma, 'work' = internship (sets the icon). */
+  kind: 'training' | 'degree' | 'work';
   institution: string;
   credential: Localized;
   field: Localized;
@@ -68,6 +68,17 @@ export const education: EducationEntry[] = [
     credential: { en: 'Master 1', fr: 'Master 1' },
     field: { en: 'Information Systems', fr: 'Systèmes d’information' },
     period: { en: '2025 – 2026', fr: '2025 – 2026' },
+  },
+  {
+    kind: 'work',
+    institution: 'Volkeno',
+    credential: { en: 'Internship', fr: 'Stage' },
+    field: { en: 'Full Stack Developer', fr: 'Développeur Full Stack' },
+    period: { en: 'Jun 2025 – Aug 2025', fr: 'juin 2025 – août 2025' },
+    description: {
+      en: 'Full stack web development in a product team: front-end and back-end features, from prototype to integration.',
+      fr: 'Développement d’applications web full stack dans une équipe produit : fonctionnalités front-end et back-end, du prototypage à l’intégration.',
+    },
   },
   {
     kind: 'degree',
