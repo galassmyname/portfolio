@@ -83,12 +83,39 @@
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
+/*
+ * Below 960px the portrait comes first in the hero (see Hero.css). It is
+ * shown in a 3:4 frame anchored at the top: only the plain lower torso is
+ * hidden — head, crossed arms and the Sonatel logo stay in view. Same photo
+ * file, cropped by CSS only.
+ */
 @media (max-width: 959px) {
   .hp {
-    width: min(82vw, 22rem);
+    order: -1;
+    width: min(66vw, 17rem);
   }
 
   .hp::before {
-    transform: translate(10px, 10px);
+    transform: translate(8px, 8px);
+  }
+
+  .hp__frame {
+    aspect-ratio: 3 / 4;
+  }
+
+  .hp__img {
+    object-fit: cover;
+    object-position: 50% 0;
+  }
+
+  .hp__status {
+    bottom: -0.85rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .hp {
+    width: 62vw;
   }
 }

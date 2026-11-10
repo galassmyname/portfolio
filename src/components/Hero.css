@@ -43,9 +43,19 @@
 }
 
 @media (max-width: 959px) {
+  /* Portrait first, right under the navigation; the hero starts at the top
+     instead of being vertically centred in a full-height screen. */
+  .hero {
+    justify-content: flex-start;
+    gap: 2.5rem;
+    min-height: 0;
+    padding-top: calc(var(--nav-h) + 1.25rem);
+  }
+
   .hero__inner {
     grid-template-columns: 1fr;
-    gap: 3.5rem;
+    justify-items: center;
+    gap: 2.25rem;
   }
 
   .hero__text {
@@ -288,5 +298,11 @@
   .hero__role {
     font-size: 0.66rem;
     letter-spacing: 0;
+  }
+}
+
+@media (max-width: 359px) {
+  .hero__role {
+    font-size: 0.6rem;
   }
 }

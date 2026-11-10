@@ -323,3 +323,20 @@
     display: inline;
   }
 }
+
+/* Small phones: placed after the base .nav__brand rule so it takes effect
+   (the 420px block above is overridden by that later rule). */
+@media (max-width: 420px) {
+  .nav__brand {
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .nav__brand {
+    gap: 0.4rem;
+    padding-left: 0.2rem;
+    font-size: 0.8rem;
+  }
+}
