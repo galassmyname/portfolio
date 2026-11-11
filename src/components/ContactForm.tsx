@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { profile } from '../data/profile';
 import { useT } from '../i18n/LanguageContext';
 import type { UI } from '../i18n/ui';
@@ -35,6 +35,11 @@ export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle');
   const [honeypot, setHoneypot] = useState(false);
   const refs = useRef<Partial<Record<Field, HTMLInputElement | HTMLTextAreaElement | null>>>({});
+  // The page is prerendered: until React has hydrated, a click on "Send" would
+  // trigger a native GET submit that reloads the page with the message in the
+  // URL and sends nothing. The button stays disabled until the form is live.
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
 
   const sending = status === 'sending';
 
@@ -136,7 +141,7 @@ export default function ContactForm() {
   );
 
   return (
-    <form className="cform spot" noValidate onSubmit={onSubmit} aria-labelledby="contact-form-title" aria-busy={sending}>
+    <form className="cform spot" method="post" noValidate onSubmit={onSubmit} aria-labelledby="contact-form-title" aria-busy={sending}>
       <div className="cform__head">
         <h3 id="contact-form-title" className="cform__title">
           {f.title}
@@ -163,7 +168,7 @@ export default function ContactForm() {
       />
 
       <div className="cform__footer">
-        <button type="submit" className="btn btn--primary cform__submit" disabled={sending}>
+        <button type="submit" className="btn btn--primary cform__submit" disabled={sending || !ready}>
           {sending ? (
             <>
               <span className="cform__spinner" aria-hidden="true" />
